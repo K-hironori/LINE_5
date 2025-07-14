@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI × LINEシステム構築 + LP制作サービス | 公式LINE導入をトータルサポート</title>
+    <meta name="description" content="公式LINEを始めたい中小企業・個人事業主向けのAI×LINEシステム構築サービス。文章作成からLP制作まで低コストでトータルサポートします。">
+    <meta name="keywords" content="LINE公式アカウント, AI, システム構築, LP制作, 中小企業, 個人事業主">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        :root {
+            --primary-color: #2c5a34; /* 落ち着いたダークグリーン */
+            --primary-color-dark: #204225;
+            --accent-color: #d4af37; /* 上品なゴールド */
+            --line-green: #06C755;
+            --text-primary: #333;
+            --text-secondary: #f9f9f9;
+            --background-light: #fdfdfd;
+            --background-medium: #f4f4f4;
+            --background-dark: #1a1a1a;
+            --border-color: #e0e0e0;
+            --font-family-base: 'Noto Sans JP', sans-serif;
+            --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px; /* ヘッダーの高さ分 */
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            line-height: 1.8;
+            color: var(--text-primary);
+            background-color: var(--background-light);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--background-dark);
+            color: var(--text-secondary);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+
+        .nav-menu a:hover, .nav-menu a:focus {
+            color: var(--accent-color);
+            outline: none;
+        }
+        
+        .nav-menu a:hover::after, .nav-menu a:focus::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* Hamburger Menu */
+        .hamburger-menu { display: none; }
+
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .hamburger-menu {
+                display: block;
+                background: none; border: none; cursor: pointer;
+                z-index: 1001; padding: 10px;
+            }
+            .hamburger-menu span {
+                display: block; width: 25px; height: 2px;
+                background-color: var(--text-secondary);
+                margin: 6px 0; transition: all 0.4s ease;
+            }
+            .hamburger-menu.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger-menu.active span:nth-child(2) { opacity: 0; }
+            .hamburger-menu.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+            .nav-menu-container {
+                position: fixed; top: 0; left: 0;
+                width: 100%; height: 100vh;
+                background-color: var(--background-dark);
+                display: flex; justify-content: center; align-items: center;
+                transform: translateX(100%); transition: transform 0.4s ease;
+            }
+            .nav-menu-container.active { transform: translateX(0); }
+            .nav-menu-container .nav-menu { display: flex; flex-direction: column; gap: 3rem; text-align: center; }
+            .nav-menu-container .nav-menu a { font-size: 1.5rem; }
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: var(--background-dark);
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 160px 0 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #particles-js { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
+        .hero .container { position: relative; z-index: 1; }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+            opacity: 0.9;
+        }
+        
+        /* LINE CTA Button */
+        .line-cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background-color: var(--line-green);
+            color: white;
+            padding: 18px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(6, 199, 85, 0.4);
+            border: none;
+        }
+
+        .line-cta-button:hover, .line-cta-button:focus {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 25px rgba(6, 199, 85, 0.5);
+            background-color: #05b34d;
+            outline: none;
+        }
+        
+        .line-cta-button .fa-line {
+            font-size: 1.5rem;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: ''; display: block; width: 60px; height: 3px;
+            background: var(--accent-color); margin: 1rem auto 0;
+        }
+        
+        /* Service Item, Problem Item, etc. Card styles */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-item, .problem-item, .benefit-item, .case-item, .pricing-item {
+            background-color: var(--background-light);
+            padding: 2.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .service-item:hover, .problem-item:hover, .case-item:hover, .pricing-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .problems { background-color: var(--background-medium); }
+        .problem-item {
+            border-left: 5px solid #d9534f;
+            background-color: #fff;
+        }
+        .problem-item h3 { color: #d9534f; margin-bottom: 1rem; font-size: 1.2rem; }
+        
+        .services { background-color: #fff; }
+        .service-item { border-top: 4px solid var(--primary-color); }
+        .service-item h3 { color: var(--primary-color); margin-bottom: 1rem; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
+
+        .benefits { 
+            background-color: var(--background-medium); 
+        }
+        .benefits .section-title {
+            color: var(--text-primary);
+        }
+        .benefit-item {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
+            color: var(--text-secondary); text-align: center;
+        }
+        .benefit-item:hover { transform: scale(1.05); box-shadow: var(--shadow-medium); }
+        .benefit-item h3 { color: var(--accent-color); font-size: 1.4rem; margin-bottom: 1rem; }
+        
+        /* Pricing Section */
+        .pricing-item.featured {
+            transform: scale(1.05);
+            background: var(--background-dark);
+            color: var(--text-secondary);
+        }
+        .pricing-item.featured h3, .pricing-item.featured .price { color: var(--accent-color); }
+        .price { font-size: 2.8rem; font-weight: 700; margin: 1rem 0; }
+        .pricing-features { list-style: none; margin-bottom: 2rem; }
+        .pricing-features li { padding: 0.7rem 0; border-bottom: 1px solid var(--border-color); }
+        .pricing-item.featured .pricing-features li { border-bottom-color: rgba(255,255,255,0.2); }
+
+        /* CTA Section (End of Page) */
+        .cta-section {
+            background-color: var(--background-medium);
+            text-align: center;
+            padding: 100px 0;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .cta-section p {
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--background-dark);
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .footer-links {
+            display: flex; justify-content: center; gap: 2rem;
+            margin-bottom: 2rem; list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            opacity: 0.8;
+        }
+        
+        .footer-links a:hover { color: var(--accent-color); opacity: 1; }
+        .footer p { opacity: 0.6; font-size: 0.9rem; }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed; bottom: 20px; right: 20px;
+            background: var(--primary-color); color: white;
+            border: none; border-radius: 50%; width: 50px; height: 50px;
+            font-size: 1.2rem; cursor: pointer;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.3s; opacity: 0; visibility: hidden;
+            z-index: 999;
+        }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background-color: var(--primary-color-dark); transform: translateY(-5px); }
+
+        /* Other sections not detailed above will inherit base styles */
+        .data-section { background-color: #fff; }
+        .stat-item { text-align: center; padding: 2rem; }
+        .stat-number { font-size: 3rem; font-weight: 700; color: var(--primary-color); }
+        .target { background-color: var(--background-medium); }
+        .target-item { background: #fff; border-left: 4px solid var(--primary-color); padding: 1.5rem; }
+        .case-studies { background-color: #fff; }
+        .case-item h3 { color: var(--primary-color); margin-bottom: 1rem; }
+        .case-item ul { list-style: none; padding-left: 0; }
+        .case-item li { padding: 0.25rem 0 0.25rem 1rem; position: relative; }
+        .case-item li::before { content: '✓'; position: absolute; left: 0; color: var(--primary-color); font-weight: bold; }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out both;
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--background-light);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 0.8s ease;
+        }
+        .loading.hide { opacity: 0; pointer-events: none; }
+        .loading-text {
+            font-size: 1.5rem; font-weight: bold; color: var(--primary-color);
+            font-family: monospace; overflow: hidden;
+            border-right: .15em solid var(--primary-color); white-space: nowrap;
+            letter-spacing: .1em;
+            animation: typing 2s steps(20, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--primary-color); } }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            html { scroll-padding-top: 70px; }
+            .hero h1 { font-size: 2.2rem; }
+            .section-title, .cta-section h2 { font-size: 2rem; }
+            .card-grid { grid-template-columns: 1fr; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">
+        <div class="loading-text">AI × LINE System...</div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">AI × LINE</div>
+                <button class="hamburger-menu" id="hamburger-menu" aria-label="メニューを開く" aria-expanded="false" aria-controls="nav-menu-container">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-menu-container" id="nav-menu-container">
+                    <nav>
+                        <ul class="nav-menu">
+                            <li><a href="#problems">お悩み</a></li>
+                            <li><a href="#services">サービス</a></li>
+                            <li><a href="#benefits">メリット</a></li>
+                            <li><a href="#pricing">料金</a></li>
+                            <li><a href="#contact">お問い合わせ</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div id="particles-js"></div>
+            <div class="container">
+                <h1 class="fade-in-up">AIで、LINE活用を<br>もっと賢く、もっと手軽に。</h1>
+                <p class="subtitle fade-in-up">
+                    文章作成・LP制作・システム構築まで、<br>
+                    あなたのビジネスに最適なLINE公式アカウント運用をトータルサポートします。
+                </p>
+                <a href="https://lin.ee/fjzMk8L" target="_blank" rel="noopener noreferrer" class="line-cta-button">
+                    <i class="fab fa-line"></i>
+                    <span>まずは無料相談する</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="section problems" id="problems">
+            <div class="container">
+                <h2 class="section-title">こんなお悩みありませんか？</h2>
+                <div class="card-grid">
+                    <div class="problem-item">
+                        <h3>文章作成が苦手</h3>
+                        <p>あいさつ文やメッセージ内容を考えるのが苦手で、何を書けばいいかわからない。</p>
+                    </div>
+                    <div class="problem-item">
+                        <h3>時間とコストがない</h3>
+                        <p>本業が忙しく運用に時間を割けない。高額な制作・運用費用はかけたくない。</p>
+                    </div>
+                    <div class="problem-item">
+                        <h3>Webサイトがない</h3>
+                        <p>ホームページやLPがなく、LINEだけでは伝えられる情報に限界を感じる。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section services" id="services">
+            <div class="container">
+                <h2 class="section-title">提供するサービス</h2>
+                <div class="card-grid">
+                    <div class="service-item">
+                        <h3><i class="fas fa-robot"></i> AIによる文章作成</h3>
+                        <p>AIを活用し、あなたのビジネスに最適な挨拶文、配信メッセージ、キャンペーン告知などをスピーディーに作成します。</p>
+                    </div>
+                    <div class="service-item">
+                        <h3><i class="fas fa-desktop"></i> 高機能LP制作</h3>
+                        <p>LINEと連携するモダンなランディングページを制作。サービス紹介や商品販売、予約受付などをLINEに集約できます。</p>
+                    </div>
+                    <div class="service-item">
+                        <h3><i class="fas fa-cogs"></i> LINEシステム構築</h3>
+                        <p>自動応答、セグメント配信、顧客管理など、ビジネスを効率化するLINEのシステム設定をトータルでサポートします。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section benefits" id="benefits">
+            <div class="container">
+                <h2 class="section-title">導入で得られるメリット</h2>
+                <div class="card-grid">
+                    <div class="benefit-item">
+                        <h3>リピート率向上</h3>
+                        <p>顧客との継続的な接点を生み出し、再来店・再購入を促すファン化の仕組みを構築します。</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h3>業務効率化</h3>
+                        <p>AIと自動化システムにより、問い合わせ対応や情報発信の手間を大幅に削減し、本業に集中できます。</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h3>コスト削減</h3>
+                        <p>高額な広告費や人件費をかけずに、低コストで効果的なマーケティングと顧客管理を実現します。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section pricing" id="pricing">
+            <div class="container">
+                <h2 class="section-title">料金プラン</h2>
+                <div class="card-grid">
+                    <div class="pricing-item">
+                        <h3>基本プラン</h3>
+                        <div class="price">¥50,000</div>
+                        <ul class="pricing-features">
+                            <li>アカウント基本設定（プロフィール / リッチメニュー / 応答時間帯）</li>
+                            <li>AIメッセージ作成</li>
+                            <li>自動応答設定</li>
+                            <li>1ヶ月サポート（メール＆LINE質問無制限、週1レポート）</li>
+                            <li><strong>クライアント既存素材活用（HP・画像など）</strong></li>
+                        </ul>
+                        <div class="before-after">
+                            <p><strong>効果実績：</strong></p>
+                            <ul>
+                                <li>友だち登録から予約までの手動対応時間 80%削減</li>
+                                <li>成約率 +15%</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="pricing-item featured">
+                        <h3>スタンダードプラン</h3>
+                        <div class="price">¥80,000</div>
+                        <ul class="pricing-features">
+                            <li>基本プランの全内容</li>
+                            <li>配信スケジュール設定（年間カレンダー提案）</li>
+                            <li>SNS連携設定（Instagram, X）</li>
+                            <li>3ヶ月サポート（週1 Zoom + LINE質問無制限）</li>
+                            <li><strong>素材ゼロ想定（テキスト生成・画像生成・スライドもこちらで用意）</strong></li>
+                        </ul>
+                        <div class="before-after">
+                            <p><strong>効果実績：</strong></p>
+                            <ul>
+                                <li>LP経由の友だち登録率 +25%</li>
+                                <li>月次売上 +20%</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="pricing-item">
+                        <h3>プレミアムプラン</h3>
+                        <div class="price">¥100,000</div>
+                        <ul class="pricing-features">
+                            <li>スタンダードプランの全内容</li>
+                            <li><strong>高機能LP制作（セクション増／CTA複数／A/B テストタグ埋込）</strong></li>
+                            <li>データ分析レポート（月次 KPI レポート PDF 付き）</li>
+                            <li>月次改善提案（ミーティング＋改善タスクシート）</li>
+                            <li>6ヶ月サポート（隔週 Zoom + Slack ワークスペース）</li>
+                            <li><strong>全てお任せ（リサーチ〜素材生成）</strong></li>
+                        </ul>
+                        <div class="before-after">
+                            <p><strong>効果実績：</strong></p>
+                            <ul>
+                                <li>自動化後の業務時間 90%削減</li>
+                                <li>LINE経由のリピート率 2.3倍</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section cta-section" id="contact">
+            <div class="container">
+                <h2>さあ、はじめましょう</h2>
+                <p>
+                    あなたのビジネスの可能性を最大限に引き出すLINE活用を、私たちがサポートします。<br>
+                    まずは下のボタンから友だち追加して、お気軽にご相談ください。
+                </p>
+                <a href="https://lin.ee/fjzMk8L" target="_blank" rel="noopener noreferrer" class="line-cta-button">
+                    <i class="fab fa-line"></i>
+                    <span>LINEで友だち追加して相談する</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <ul class="footer-links">
+                <li><a href="#problems">お悩み</a></li>
+                <li><a href="#services">サービス</a></li>
+                <li><a href="#benefits">メリット</a></li>
+                <li><a href="#pricing">料金</a></li>
+            </ul>
+            <p>&copy; 2024 AI × LINE System. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="ページトップに戻る">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Loading Animation
+            const loading = document.getElementById('loading');
+            window.addEventListener('load', () => {
+                if (loading) {
+                    loading.classList.add('hide');
+                    setTimeout(() => { loading.style.display = 'none'; }, 800);
+                }
+            });
+
+            // Hamburger Menu
+            const hamburger = document.getElementById('hamburger-menu');
+            const navContainer = document.getElementById('nav-menu-container');
+            if (hamburger && navContainer) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navContainer.classList.toggle('active');
+                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.setAttribute('aria-expanded', !isExpanded);
+                });
+                navContainer.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navContainer.classList.remove('active');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+
+            // Back to Top Button
+            const backToTop = document.getElementById('backToTop');
+            if (backToTop) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 300) {
+                        backToTop.classList.add('show');
+                    } else {
+                        backToTop.classList.remove('show');
+                    }
+                });
+                backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            }
+
+            // Intersection Observer for Animations
+            const animatedElements = document.querySelectorAll('.fade-in-up');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            animatedElements.forEach(el => {
+                el.style.animationPlayState = 'paused'; // 初期状態は停止
+                observer.observe(el);
+            });
+            
+            // Particles.js
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    "particles": { "number": { "value": 60, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#ffffff" }, "shape": { "type": "circle" }, "opacity": { "value": 0.4, "random": true }, "size": { "value": 2, "random": true }, "line_linked": { "enable": false }, "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "straight": false, "out_mode": "out" } },
+                    "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "bubble" }, "onclick": { "enable": false } }, "modes": { "bubble": { "distance": 250, "size": 4, "duration": 2, "opacity": 0.8 } } },
+                    "retina_detect": true
+                });
+            }
+        });
+    </script>
+</body>
+</html>
