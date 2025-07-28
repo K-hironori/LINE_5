@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サイト移転のお知らせ</title>
+    <meta http-equiv="refresh" content="0;url=https://www.hironoristudio.com">
+    <link rel="canonical" href="https://www.hironoristudio.com">
+    <style>
+        body {
+            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #2c5a34;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background-color: #204225;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>サイトが移転しました</h1>
+        <p>当サイトは新しいドメインに移転いたしました。<br>
+        自動的にリダイレクトされない場合は、下記のボタンをクリックしてください。</p>
+        <a href="https://www.hironoristudio.com" class="btn">新しいサイトへ移動</a>
+    </div>
+    
+    <script>
+        // 3秒後に自動リダイレクト
+        setTimeout(function() {
+            window.location.href = 'https://www.hironoristudio.com';
+        }, 3000);
+    </script>
+</body>
+</html>
