@@ -12,12 +12,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Deploy to Xserver via SFTP
-      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-      with:
-        username: xs842747
-        server: sv16565.xserver.jp
-        password: ${{ secrets.FTP_PASSWORD }}
-        local_path: './index.html'
-        remote_path: '/public_html/'
-        sftp_options: '-o ConnectTimeout=5'
+    - name: Deploy to Xserver via FTP
+      run: |
+        curl -T index.html \
+             ftp://sv16565.xserver.jp/public_html/ \
+             --user xs842747:${{ secrets.FTP_PASSWORD }} \
+             --ftp-create-dirs \
+             --connect-timeout 30 \
+             --max-time 300 \
+             --retry 3 \
+             --retry-delay 10
