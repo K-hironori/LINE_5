@@ -10,62 +10,63 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
     
-    - name: Debug - Check file exists
+    - name: Install FTP tools
       run: |
-        echo "=== File check ==="
+        sudo apt-get update
+        sudo apt-get install -y lftp
+        echo "lftp version:"
+        lftp --version
+    
+    - name: Verify file content
+      run: |
+        echo "=== Verifying index.html ==="
         ls -la index.html
-        echo "=== File content preview ==="
-        head -20 index.html | grep -E "(logo|hiro|©)"
-        echo "=== Environment check ==="
-        echo "Secret length: ${#FTP_PASSWORD}"
-        echo "=== Network test ==="
-        ping -c 3 sv16565.xserver.jp || echo "Ping failed, continuing..."
-      env:
-        FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        echo "=== Checking for 'hiro' in file ==="
+        grep -n "hiro" index.html || echo "No 'hiro' found"
+        echo "=== File size ==="
+        wc -c index.html
     
-    - name: Deploy to Xserver via FTP with passive mode
+    - name: Deploy to Xserver using lftp
       run: |
-        echo "=== Starting FTP upload ==="
-        curl -T index.html \
-             ftp://sv16565.xserver.jp/public_html/ \
-             --user xs842747:${{ secrets.FTP_PASSWORD }} \
-             --ftp-pasv \
-             --ftp-create-dirs \
-             --connect-timeout 60 \
-             --max-time 600 \
-             --retry 5 \
-             --retry-delay 15 \
-             --verbose \
-             --show-error \
-             --insecure
+        echo "=== Starting deployment with lftp ==="
         
-        upload_result=$?
-        echo "=== Upload result: $upload_result ==="
+        # Create lftp script
+        cat > deploy.lftp << EOF
+        set ftp:ssl-allow no
+        set ftp:ssl-force no
+        set ftp:passive-mode on
+        set net:timeout 60
+        set net:max-retries 3
+        set net:reconnect-interval-base 5
+        open ftp://xs842747:${{ secrets.FTP_PASSWORD }}@sv16565.xserver.jp
+        cd public_html
+        put index.html
+        ls -la index.html
+        quit
+        EOF
         
-        if [ $upload_result -eq 0 ]; then
-          echo "✅ Upload successful!"
-          echo "Site should be updated at: https://hironoristudio.com/"
+        echo "=== lftp script created ==="
+        cat deploy.lftp | sed 's/:.*@/:***@/g'  # Hide password in logs
+        
+        echo "=== Executing lftp ==="
+        lftp -f deploy.lftp
+        
+        if [ $? -eq 0 ]; then
+          echo "✅ Deployment successful!"
+          echo "🌐 Site updated at: https://hironoristudio.com/"
         else
-          echo "❌ Upload failed with exit code: $upload_result"
-          echo "Trying alternative approach..."
-          
-          # Alternative: Try without SSL/TLS
-          curl -T index.html \
-               ftp://sv16565.xserver.jp:21/public_html/ \
-               --user xs842747:${{ secrets.FTP_PASSWORD }} \
-               --ftp-pasv \
-               --ftp-create-dirs \
-               --connect-timeout 60 \
-               --max-time 600 \
-               --verbose
-               
-          alternative_result=$?
-          if [ $alternative_result -eq 0 ]; then
-            echo "✅ Alternative upload successful!"
-          else
-            echo "❌ Both upload methods failed"
-            exit 1
-          fi
+          echo "❌ Deployment failed"
+          exit 1
         fi
+        
+        # Clean up
+        rm -f deploy.lftp
+    
+    - name: Verify deployment
+      run: |
+        echo "=== Verifying deployment ==="
+        sleep 10
+        curl -s https://hironoristudio.com/ | grep -o "hiro" | head -1 && echo "✅ Site contains 'hiro'" || echo "⚠️ Site verification inconclusive"
