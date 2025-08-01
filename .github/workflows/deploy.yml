@@ -25,27 +25,47 @@ jobs:
       env:
         FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
     
-    - name: Deploy to Xserver via FTP with verbose logging
+    - name: Deploy to Xserver via FTP with passive mode
       run: |
         echo "=== Starting FTP upload ==="
         curl -T index.html \
              ftp://sv16565.xserver.jp/public_html/ \
              --user xs842747:${{ secrets.FTP_PASSWORD }} \
+             --ftp-pasv \
              --ftp-create-dirs \
-             --connect-timeout 30 \
-             --max-time 300 \
-             --retry 3 \
-             --retry-delay 10 \
+             --connect-timeout 60 \
+             --max-time 600 \
+             --retry 5 \
+             --retry-delay 15 \
              --verbose \
              --show-error \
-             --fail
+             --insecure
         
         upload_result=$?
         echo "=== Upload result: $upload_result ==="
         
         if [ $upload_result -eq 0 ]; then
           echo "✅ Upload successful!"
+          echo "Site should be updated at: https://hironoristudio.com/"
         else
           echo "❌ Upload failed with exit code: $upload_result"
-          exit 1
+          echo "Trying alternative approach..."
+          
+          # Alternative: Try without SSL/TLS
+          curl -T index.html \
+               ftp://sv16565.xserver.jp:21/public_html/ \
+               --user xs842747:${{ secrets.FTP_PASSWORD }} \
+               --ftp-pasv \
+               --ftp-create-dirs \
+               --connect-timeout 60 \
+               --max-time 600 \
+               --verbose
+               
+          alternative_result=$?
+          if [ $alternative_result -eq 0 ]; then
+            echo "✅ Alternative upload successful!"
+          else
+            echo "❌ Both upload methods failed"
+            exit 1
+          fi
         fi
