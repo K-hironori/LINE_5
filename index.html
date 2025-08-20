@@ -152,16 +152,31 @@
         
         /* Hero Section */
         .hero {
-            background: var(--background-dark);
+            background-color: var(--background-dark);
+            background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center center;
             color: var(--text-secondary);
             text-align: center;
             padding: 160px 0 120px;
             position: relative;
             overflow: hidden;
+            animation: kenburns 20s ease-out infinite;
         }
 
-        #particles-js { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
-        .hero .container { position: relative; z-index: 1; }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(26, 26, 26, 0.6);
+            z-index: 0;
+        }
+
+        #particles-js { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; }
+        .hero .container { position: relative; z-index: 2; }
         
         .hero h1 {
             font-size: 2.8rem;
@@ -206,6 +221,12 @@
         
         .line-cta-button .fa-line {
             font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .line-cta-button:hover .fa-line {
+            transform: scale(1.1) rotate(-10deg);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         /* Section Styles */
@@ -398,6 +419,23 @@
         @keyframes typing { from { width: 0 } to { width: 100% } }
         @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--primary-color); } }
 
+        /* ローディングカーテンのスタイル */
+        .loading-curtain {
+            position: fixed;
+            top: 0;
+            width: 50%;
+            height: 100vh;
+            background-color: var(--primary-color-dark);
+            z-index: 9998;
+            transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+        #loading-curtain-left { left: 0; }
+        #loading-curtain-right { right: 0; }
+
+        /* カーテンが開くときのスタイル */
+        body.loaded #loading-curtain-left { transform: translateX(-100%); }
+        body.loaded #loading-curtain-right { transform: translateX(100%); }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             html { scroll-padding-top: 70px; }
@@ -406,6 +444,12 @@
             .card-grid { grid-template-columns: 1fr; }
         }
         
+        @keyframes kenburns {
+            0% { transform: scale(1.0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1.0); }
+        }
+
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem !important; }
             .section-title { font-size: 1.6rem !important; }
@@ -414,6 +458,8 @@
     </style>
 </head>
 <body>
+    <div class="loading-curtain" id="loading-curtain-left"></div>
+    <div class="loading-curtain" id="loading-curtain-right"></div>
     <div class="loading" id="loading">
         <div class="loading-text">Linkup-Studio...</div>
     </div>
@@ -603,10 +649,15 @@
             const loading = document.getElementById('loading');
             window.addEventListener('load', () => {
                 if (loading) {
+                    // 2秒後にタイピングアニメーションを非表示
                     setTimeout(() => {
                         loading.classList.add('hide');
-                        setTimeout(() => { loading.style.display = 'none'; }, 800);
-                    }, 2000); // 2秒間表示してから非表示
+                    }, 2000); 
+
+                    // 2.2秒後（少し遅れて）カーテンが開くクラスを追加
+                    setTimeout(() => {
+                        document.body.classList.add('loaded');
+                    }, 2200);
                 }
             });
 
