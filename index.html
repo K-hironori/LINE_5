@@ -361,35 +361,20 @@
         /* Loading Animation */
         .loading {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000;
+            background: var(--background-light);
             display: flex; justify-content: center; align-items: center;
             z-index: 9999; transition: opacity 0.8s ease;
         }
-        
-        .loading::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-image: url('./2138B8FC-F978-496B-842D-DF75DE9176D7_1_102_o.jpeg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0.7;
-            z-index: -1;
-        }
         .loading.hide { opacity: 0; pointer-events: none; }
         .loading-text {
-            font-size: 1.5rem; font-weight: bold; color: #fff;
+            font-size: 1.5rem; font-weight: bold; color: var(--primary-color);
             font-family: monospace; overflow: hidden;
-            border-right: .15em solid #fff; white-space: nowrap;
+            border-right: .15em solid var(--primary-color); white-space: nowrap;
             letter-spacing: .1em;
             animation: typing 2s steps(40, end), blink-caret .75s step-end infinite;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            z-index: 1;
         }
         @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #fff; } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--primary-color); } }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
@@ -520,14 +505,14 @@
                         <div class="price">¥50,000</div>
                         <ul class="pricing-features">
                             <li>LINE公式アカウント初期設定</li>
-                            <li>（プロフィール／リッチメニュー／応答時間帯）</li>
-                            <li>メッセージひな形 5本</li>
+                            <li>（プロフィール／リッチメニュー／応答など）</li>
                             <li>既存素材活用（HP・画像）</li>
+                            <li>納品後1ヶ月サポート</li>
                         </ul>
                     </div>
                     <div class="pricing-item">
-                        <h3>LPライトプラン</h3>
-                        <div class="price">¥70,000</div>
+                        <h3>LP制作プラン</h3>
+                        <div class="price">¥80,000</div>
                         <ul class="pricing-features">
                             <li>1ページLP（3〜4セクション／CTA1）</li>
                             <li>スマホ最適化</li>
@@ -539,10 +524,8 @@
                         <div class="price">¥80,000</div>
                         <ul class="pricing-features">
                             <li>ベーシック全内容</li>
-                            <li>自動応答フロー設計（FAQ・予約受付など）</li>
-                            <li>配信スケジュール設計（キャンペーン／タグ管理）</li>
-                            <li>素材ゼロ対応（文章・画像・スライド生成）</li>
-                            <li>クーポン・アンケート・ショップカード機能実装</li>
+                            <li>素材ゼロ対応（文章・画像）</li>
+                            <li>納品後1ヶ月サポート</li>
                         </ul>
                     </div>
                     <div class="pricing-item">
@@ -550,8 +533,9 @@
                         <div class="price">¥120,000</div>
                         <ul class="pricing-features">
                             <li>スタンダード全内容</li>
-                            <li>高機能LP制作（6〜8セクション／CTA複数／ABテストタグ）</li>
-                            <li>改稿無制限（期間内）</li>
+                            <li>高機能LP制作</li>
+                            <li>改稿無制限（サポート内）</li>
+                            <li>納品後1ヶ月サポート</li>
                         </ul>
                     </div>
                 </div>
