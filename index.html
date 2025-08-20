@@ -360,6 +360,25 @@
         .fade-in-up {
             animation: fadeInUp 0.8s ease-out both;
         }
+        
+        /* 左右からのアニメーション用スタイル */
+        .fade-in-left, .fade-in-right {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-left {
+            transform: translateX(-50px);
+        }
+        .fade-in-right {
+            transform: translateX(50px);
+        }
+        
+        /* 表示されたときのスタイル */
+        .fade-in-left.is-visible, 
+        .fade-in-right.is-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
 
         /* Loading Animation */
         .loading {
@@ -443,15 +462,15 @@
             <div class="container">
                 <h2 class="section-title" style="font-size: 2rem;">こんなお悩みありませんか？</h2>
                 <div class="card-grid">
-                    <div class="problem-item">
+                    <div class="problem-item fade-in-left">
                         <h3>文章作成が苦手</h3>
                         <p>あいさつ文やメッセージ内容を考えるのが苦手で、何を書けばいいかわからない。</p>
                     </div>
-                    <div class="problem-item">
+                    <div class="problem-item fade-in-up">
                         <h3>時間とお金をかけたくない</h3>
                         <p>本業が忙しく運用に時間を割けない。高額な制作・運用費用はかけたくない。</p>
                     </div>
-                    <div class="problem-item">
+                    <div class="problem-item fade-in-right">
                         <h3>Webサイトがない</h3>
                         <p>ホームページやLPがなく、LINEだけでは伝えられる情報に限界を感じる。</p>
                     </div>
@@ -463,15 +482,15 @@
             <div class="container">
                 <h2 class="section-title">提供するサービス</h2>
                 <div class="card-grid">
-                    <div class="service-item">
+                    <div class="service-item fade-in-left">
                         <h3><i class="fas fa-edit"></i> 文章作成サポート</h3>
                         <p>あなたのビジネスに最適な挨拶文、配信メッセージ、キャンペーン告知などをプロがスピーディーに作成します。</p>
                     </div>
-                    <div class="service-item">
+                    <div class="service-item fade-in-up">
                         <h3><i class="fas fa-desktop"></i> 高機能LP制作</h3>
                         <p>LINEと連携するモダンなランディングページを制作。サービス紹介や商品販売、予約受付などをLINEに集約できます。</p>
                     </div>
-                    <div class="service-item">
+                    <div class="service-item fade-in-right">
                         <h3><i class="fas fa-cogs"></i> LINEシステム構築</h3>
                         <p>自動応答、セグメント配信、顧客管理など、ビジネスを効率化するLINEのシステム設定をトータルでサポートします。</p>
                     </div>
@@ -483,15 +502,15 @@
             <div class="container">
                 <h2 class="section-title">導入で得られるメリット</h2>
                 <div class="card-grid">
-                    <div class="benefit-item">
+                    <div class="benefit-item fade-in-left">
                         <h3>リピート率向上</h3>
                         <p>顧客との継続的な接点を生み出し、再来店・再購入を促すファン化の仕組みを構築します。</p>
                     </div>
-                    <div class="benefit-item">
+                    <div class="benefit-item fade-in-up">
                         <h3>業務効率化</h3>
                         <p>自動化システムにより、問い合わせ対応や情報発信の手間を大幅に削減し、本業に集中できます。</p>
                     </div>
-                    <div class="benefit-item">
+                    <div class="benefit-item fade-in-right">
                         <h3>コスト削減</h3>
                         <p>高額な広告費や人件費をかけずに、低コストで効果的なマーケティングと顧客管理を実現します。</p>
                     </div>
@@ -624,18 +643,24 @@
             }
 
             // Intersection Observer for Animations
-            const animatedElements = document.querySelectorAll('.fade-in-up');
+            const animatedElements = document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.style.animationPlayState = 'running';
+                        if (entry.target.classList.contains('fade-in-up')) {
+                            entry.target.style.animationPlayState = 'running';
+                        } else {
+                            entry.target.classList.add('is-visible');
+                        }
                         observer.unobserve(entry.target);
                     }
                 });
             }, { threshold: 0.1 });
 
             animatedElements.forEach(el => {
-                el.style.animationPlayState = 'paused'; // 初期状態は停止
+                if (el.classList.contains('fade-in-up')) {
+                    el.style.animationPlayState = 'paused'; // 初期状態は停止
+                }
                 observer.observe(el);
             });
             
