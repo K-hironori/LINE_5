@@ -15,15 +15,16 @@
     
     <style>
         :root {
-            --primary-color: #2c5a34; /* 落ち着いたダークグリーン */
-            --primary-color-dark: #204225;
-            --accent-color: #d4af37; /* 上品なゴールド */
+            /* New Blue Color Theme */
+            --primary-color: #005A9C; /* 信頼感のあるディープブルー */
+            --primary-color-dark: #003D6B;
+            --accent-color: #B0C4DE; /* 上品なライトスチールブルー (シルバー風) */
             --line-green: #06C755;
             --text-primary: #333;
             --text-secondary: #f9f9f9;
             --background-light: #fdfdfd;
-            --background-medium: #f4f4f4;
-            --background-dark: #1a1a1a;
+            --background-medium: #f0f4f8; /* 少し青みがかったグレー */
+            --background-dark: #1f2937; /* ダークブルーグレー */
             --border-color: #e0e0e0;
             --font-family-base: 'Noto Sans JP', sans-serif;
             --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.08);
@@ -153,7 +154,7 @@
         /* Hero Section */
         .hero {
             background-color: var(--background-dark);
-            background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format&fit=crop');
+            background-image: url('https://images.unsplash.com/photo-1604147706283-d7119b5b822c?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center center;
             color: var(--text-secondary);
@@ -171,7 +172,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(26, 26, 26, 0.6);
+            background-color: rgba(31, 41, 55, 0.6);
             z-index: 0;
         }
 
@@ -243,7 +244,7 @@
 
         .section-title::after {
             content: ''; display: block; width: 60px; height: 3px;
-            background: var(--accent-color); margin: 1rem auto 0;
+            background: var(--primary-color); margin: 1rem auto 0;
         }
         
         /* Service Item, Problem Item, etc. Card styles */
@@ -268,10 +269,10 @@
 
         .problems { background-color: var(--background-medium); }
         .problem-item {
-            border-left: 5px solid #d9534f;
+            border-left: 5px solid #EF4444;
             background-color: #fff;
         }
-        .problem-item h3 { color: #d9534f; margin-bottom: 1rem; font-size: 1.2rem; }
+        .problem-item h3 { color: #EF4444; margin-bottom: 1rem; font-size: 1.2rem; }
         
         .services { background-color: #fff; }
         .service-item { border-top: 4px solid var(--primary-color); }
@@ -284,10 +285,7 @@
             color: var(--text-primary);
         }
         .benefit-item {
-            background: rgba(44, 90, 52, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
             color: var(--text-secondary); text-align: center;
         }
         .benefit-item:hover { transform: scale(1.05); box-shadow: var(--shadow-medium); }
@@ -401,40 +399,46 @@
             transform: translateX(0);
         }
 
-        /* Loading Animation */
-        .loading {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--background-light);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999; transition: opacity 0.8s ease;
-        }
-        .loading.hide { opacity: 0; pointer-events: none; }
-        .loading-text {
-            font-size: 1.5rem; font-weight: bold; color: var(--primary-color);
-            font-family: monospace; overflow: hidden;
-            border-right: .15em solid var(--primary-color); white-space: nowrap;
-            letter-spacing: .1em;
-            animation: typing 2s steps(40, end), blink-caret .75s step-end infinite;
-        }
-        @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--primary-color); } }
-
-        /* ローディングカーテンのスタイル */
-        .loading-curtain {
+        /* --- NEW Loading Animation --- */
+        .loading-overlay {
             position: fixed;
             top: 0;
-            width: 50%;
-            height: 100vh;
-            background-color: var(--primary-color-dark);
-            z-index: 9998;
-            transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1);
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--background-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease 1.5s;
         }
-        #loading-curtain-left { left: 0; }
-        #loading-curtain-right { right: 0; }
+        .loading-overlay.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loading-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            animation: zoom-in-out 2s ease-in-out forwards;
+        }
 
-        /* カーテンが開くときのスタイル */
-        body.loaded #loading-curtain-left { transform: translateX(-100%); }
-        body.loaded #loading-curtain-right { transform: translateX(100%); }
+        @keyframes zoom-in-out {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(100);
+                opacity: 0;
+            }
+        }
+        /* --- End of NEW Loading Animation --- */
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
@@ -458,10 +462,8 @@
     </style>
 </head>
 <body>
-    <div class="loading-curtain" id="loading-curtain-left"></div>
-    <div class="loading-curtain" id="loading-curtain-right"></div>
-    <div class="loading" id="loading">
-        <div class="loading-text">Linkup-Studio...</div>
+    <div class="loading-overlay" id="loading">
+        <div class="loading-logo">Linkup-Studio</div>
     </div>
 
     <header>
@@ -645,19 +647,13 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Loading Animation
+            // NEW Loading Animation
             const loading = document.getElementById('loading');
             window.addEventListener('load', () => {
                 if (loading) {
-                    // 2秒後にタイピングアニメーションを非表示
                     setTimeout(() => {
                         loading.classList.add('hide');
-                    }, 2000); 
-
-                    // 2.2秒後（少し遅れて）カーテンが開くクラスを追加
-                    setTimeout(() => {
-                        document.body.classList.add('loaded');
-                    }, 2200);
+                    }, 2300); // Animation duration (2s) + delay
                 }
             });
 
