@@ -392,38 +392,7 @@
             transform: translateX(0);
         }
 
-        /* Loading Animation */
-        .loading {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--background-light);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999; transition: opacity 0.8s ease;
-        }
-        .loading.hide { opacity: 0; pointer-events: none; }
-        .loading-text {
-            font-size: 1.5rem; font-weight: bold; color: var(--primary-color);
-            font-family: monospace; overflow: hidden;
-            border-right: .15em solid var(--primary-color); white-space: nowrap;
-            letter-spacing: .1em;
-            animation: typing 2s steps(40, end), blink-caret .75s step-end infinite;
-        }
-        @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--primary-color); } }
-
-        .loading-curtain {
-            position: fixed;
-            top: 0;
-            width: 50%;
-            height: 100vh;
-            background-color: var(--primary-color); /* ローディング色を変更 */
-            z-index: 9998;
-            transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1);
-        }
-        #loading-curtain-left { left: 0; }
-        #loading-curtain-right { right: 0; }
-
-        body.loaded #loading-curtain-left { transform: translateX(-100%); }
-        body.loaded #loading-curtain-right { transform: translateX(100%); }
+        /* Loading animation removed */
 
         /* Responsive adjustments */
         @media (max-width: 992px) {
@@ -446,11 +415,7 @@
     </style>
 </head>
 <body>
-    <div class="loading-curtain" id="loading-curtain-left"></div>
-    <div class="loading-curtain" id="loading-curtain-right"></div>
-    <div class="loading" id="loading">
-        <div class="loading-text">Linkup-Studio...</div>
-    </div>
+    
 
     <header id="header">
         <div class="container">
@@ -648,19 +613,7 @@ class="line-cta-button">
                 });
             }
 
-            // Loading Animation
-            const loading = document.getElementById('loading');
-            window.addEventListener('load', () => {
-                if (loading) {
-                    setTimeout(() => {
-                        loading.classList.add('hide');
-                    }, 2000); 
-
-                    setTimeout(() => {
-                        document.body.classList.add('loaded');
-                    }, 2200);
-                }
-            });
+            // Loading animation removed
 
             // Hamburger Menu
             const hamburger = document.getElementById('hamburger-menu');
