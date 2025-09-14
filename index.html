@@ -511,6 +511,8 @@
                     hamburger.setAttribute('aria-expanded', !isExpanded);
                     // スクロール固定
                     document.body.style.overflow = navContainer.classList.contains('active') ? 'hidden' : '';
+                    // 戻るボタン表示制御（保険）
+                    if (menuBack) menuBack.style.display = navContainer.classList.contains('active') ? 'inline-flex' : 'none';
                 });
                 if (menuBack) {
                     menuBack.addEventListener('click', (e) => {
@@ -520,6 +522,7 @@
                         navContainer.classList.remove('active');
                         hamburger.setAttribute('aria-expanded', 'false');
                         document.body.style.overflow = '';
+                        menuBack.style.display = 'none';
                     });
                 }
                 // メニュー項目クリックでメニューを閉じる
@@ -529,7 +532,17 @@
                         navContainer.classList.remove('active');
                         hamburger.setAttribute('aria-expanded', 'false');
                         document.body.style.overflow = '';
+                        if (menuBack) menuBack.style.display = 'none';
                     });
+                });
+                // 画面サイズ変更時の表示制御
+                window.addEventListener('resize', () => {
+                    if (!menuBack) return;
+                    if (window.innerWidth <= 768 && navContainer.classList.contains('active')) {
+                        menuBack.style.display = 'inline-flex';
+                    } else {
+                        menuBack.style.display = 'none';
+                    }
                 });
             }
 
