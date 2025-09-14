@@ -48,7 +48,7 @@
 
         /* Header */
         header {
-            background-color: rgba(253, 253, 253, 0.95);
+            background-color: #ffffff; /* 強めのコントラストで文字を確実に見せる */
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             padding: 0.8rem 0; /* 高さを少し調整 */
@@ -74,8 +74,11 @@
         
         /* --- 修正: PC用ナビゲーションメニュー --- */
         .nav-menu { display: flex; list-style: none; gap: 2.5rem; }
-        .nav-menu a {
-            color: var(--text-primary); text-decoration: none; font-weight: 700;
+        .nav-menu a,
+        .nav-menu a:link,
+        .nav-menu a:visited {
+            color: #111 !important; /* ヘッダー上で確実に視認できる色 */
+            text-decoration: none; font-weight: 800;
             transition: color 0.3s ease; position: relative; padding: 5px 0;
         }
         .nav-menu a::after {
@@ -235,7 +238,9 @@
             }
             .nav-menu-container.active { display: flex; transform: translateX(0); }
             .nav-menu { flex-direction: column; gap: 3rem; text-align: center; padding-bottom: 120px; }
-            .nav-menu a { font-size: 1.5rem; color: var(--text-primary); font-weight: 800; }
+            .nav-menu a,
+            .nav-menu a:link,
+            .nav-menu a:visited { font-size: 1.5rem; color: #111 !important; font-weight: 800; }
             
             .hamburger-menu {
                 display: block; background: none; border: none; cursor: pointer;
