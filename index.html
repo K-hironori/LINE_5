@@ -183,8 +183,26 @@
         .line-cta-button:hover, .line-cta-button:focus { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(6, 199, 85, 0.4); background-color: #05b34d; outline: none; }
         .cta-section { text-align: center; padding: 100px 0; }
         .cta-section h2 { font-family: var(--font-family-heading); font-size: 3.2rem; margin-bottom: 1.5rem; font-weight: 700; }
-        footer { background: var(--text-primary); color: #999; text-align: center; padding: 4rem 0; }
-        .footer-links a:hover { color: white; }
+        /* Footer - improve contrast and aesthetics */
+        footer {
+            background: linear-gradient(180deg, #121212 0%, #1a1a1a 100%);
+            color: #d0d0d0;
+            text-align: center;
+            padding: 4rem 0;
+            border-top: 2px solid var(--gold-dark);
+        }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; list-style: none; }
+        .footer-links a,
+        .footer-links a:link,
+        .footer-links a:visited {
+            color: #dddddd !important;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.25s ease;
+        }
+        .footer-links a:hover,
+        .footer-links a:focus-visible { color: #ffffff !important; outline: none; }
+        footer p { color: #a8a8a8; font-size: 0.9rem; }
         
         .back-to-top {
             position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px;
