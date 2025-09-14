@@ -272,6 +272,7 @@
                     <span></span>
                 </button>
                 <nav class="nav-menu-container" id="nav-menu-container">
+                    <button class="menu-back" id="menu-back" aria-label="メニューを閉じる" type="button">← 戻る</button>
                     <ul class="nav-menu">
                         <li><a href="#problems">お悩み</a></li>
                         <li><a href="#services">サービス</a></li>
@@ -476,6 +477,7 @@
             // --- ✨ ハンバーガーメニューのJavaScriptを追加 ✨ ---
             const hamburger = document.getElementById('hamburger-menu');
             const navContainer = document.getElementById('nav-menu-container');
+            const menuBack = document.getElementById('menu-back');
             if (hamburger && navContainer) {
                 hamburger.addEventListener('click', () => {
                     hamburger.classList.toggle('active');
@@ -483,6 +485,13 @@
                     const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
                     hamburger.setAttribute('aria-expanded', !isExpanded);
                 });
+                if (menuBack) {
+                    menuBack.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navContainer.classList.remove('active');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    });
+                }
                 // メニュー項目クリックでメニューを閉じる
                 navContainer.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', () => {
