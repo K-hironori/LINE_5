@@ -14,31 +14,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <style>
-        /* === NEW DESIGN V5 | CONCEPT: The Midas Touch === */
         :root {
-            /* ✨ Gold Gradient ✨ */
             --gold-dark: #B8860B;
             --gold-light: #FFD700;
             --primary-gradient: linear-gradient(90deg, var(--gold-dark) 0%, var(--gold-light) 50%, var(--gold-dark) 100%);
-
             --line-green: #06C755;
-            
-            /* White & Gold Theme Colors */
             --text-primary: #1a1a1a; 
             --text-secondary: #666;
             --background-light: #fdfdfd;
             --background-medium: #f8f6f3;
             --border-color: #e0e0e0;
-            
             --font-family-base: 'Noto Sans JP', sans-serif;
             --font-family-heading: 'EB Garamond', serif;
-            
             --shadow-soft: 0 5px 25px rgba(0, 0, 0, 0.05);
             --shadow-medium: 0 10px 40px rgba(0, 0, 0, 0.07);
         }
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+        
+        /* --- 修正: スムーズスクロールを無効化 --- */
+        html { scroll-padding-top: 70px; }
 
         body {
             font-family: var(--font-family-base);
@@ -56,9 +51,10 @@
             background-color: rgba(253, 253, 253, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            padding: 1rem 0; position: fixed;
+            padding: 0.8rem 0; /* 高さを少し調整 */
+            position: fixed;
             width: 100%; top: 0; z-index: 1000;
-            transition: box-shadow 0.3s ease;
+            transition: box-shadow 0.3s ease, border-bottom 0.3s ease;
             border-bottom: 1px solid transparent;
         }
         header.scrolled { box-shadow: var(--shadow-soft); border-bottom: 1px solid var(--border-color); }
@@ -66,7 +62,7 @@
 
         .logo {
             font-family: var(--font-family-heading);
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             background: var(--primary-gradient);
             background-size: 200% auto;
@@ -74,7 +70,8 @@
             -webkit-text-fill-color: transparent;
             animation: shimmerText 5s linear infinite;
         }
-
+        
+        /* --- 修正: PC用ナビゲーションメニュー --- */
         .nav-menu { display: flex; list-style: none; gap: 2.5rem; }
         .nav-menu a {
             color: var(--text-secondary); text-decoration: none; font-weight: 700;
@@ -88,45 +85,41 @@
         }
         .nav-menu a:hover { color: var(--text-primary); }
         .nav-menu a:hover::after { transform: scaleX(1); transform-origin: bottom left; }
-        
+
+        /* --- ✨ ハンバーガーメニュー (モバイル用) ✨ --- */
+        .hamburger-menu { display: none; }
+        .nav-menu-container { display: flex; }
+
         /* Hero Section */
         .hero {
             background-color: var(--background-light);
             text-align: center;
-            padding: 180px 0 160px;
+            padding: 160px 0 140px;
             position: relative;
             overflow: hidden;
         }
 
-        /* --- ✨ Gold Dust Animation with particles.js ✨ --- */
         #particles-js { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
         .hero .container { position: relative; z-index: 1; }
 
         .hero h1 {
             font-family: var(--font-family-heading);
-            font-size: 4.5rem; margin-bottom: 1.5rem; font-weight: 700;
+            font-size: 4.2rem; margin-bottom: 1.5rem; font-weight: 700;
             letter-spacing: 1px; line-height: 1.3; color: var(--text-primary);
         }
         .hero .subtitle {
-            font-size: 1.25rem; max-width: 680px;
+            font-size: 1.2rem; max-width: 680px;
             margin: 0 auto 3.5rem auto; color: var(--text-secondary);
         }
         
-        /* Section Styles */
-        .section { padding: 120px 0; position: relative; }
+        .section { padding: 100px 0; position: relative; }
         .section:nth-of-type(even) { background-color: var(--background-medium); }
         
-        /* --- ✨ Mask Reveal Animation for Titles ✨ --- */
         .section-title {
             font-family: var(--font-family-heading);
-            text-align: center; font-size: 3.5rem; margin-bottom: 5rem;
+            text-align: center; font-size: 3.2rem; margin-bottom: 4rem;
             font-weight: 700; color: var(--text-primary);
-            position: relative; display: inline-block;
         }
-        .section-title span { display: inline-block; opacity: 0; transform: translateY(100%); transition: transform 0.8s ease, opacity 0.8s ease; }
-        .section-title.is-visible span { opacity: 1; transform: translateY(0); }
-        .section-title.is-visible span:nth-child(n+2) { transition-delay: 0.1s; }
-
         .section-title::after {
             content: ''; display: block; width: 80px; height: 2px;
             background: var(--primary-gradient); background-size: 200%;
@@ -134,31 +127,18 @@
             animation: shimmerText 5s linear infinite;
         }
         
-        /* --- ✨ Inner Glow Hover Effect for Cards ✨ --- */
         .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; }
         .problem-item, .service-item, .benefit-item, .pricing-item {
             background-color: var(--background-light); padding: 2.5rem;
             border-radius: 8px; position: relative; overflow: hidden;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: var(--shadow-soft);
             border: 1px solid var(--border-color);
         }
         .problem-item:hover, .service-item:hover, .benefit-item:hover, .pricing-item:hover {
-            transform: translateY(-10px); box-shadow: var(--shadow-medium);
+            transform: translateY(-8px); box-shadow: var(--shadow-medium);
         }
-        .card-glow {
-            content: ''; position: absolute; top: 50%; left: 50%;
-            width: 300%; height: 300%;
-            background: radial-gradient(circle, var(--gold-light) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: opacity 0.6s ease;
-            pointer-events: none;
-        }
-        .problem-item:hover .card-glow, .service-item:hover .card-glow, .benefit-item:hover .card-glow, .pricing-item:hover .card-glow {
-            opacity: 0.15;
-        }
-
+        
         .problem-item h3, .service-item h3, .benefit-item h3, .pricing-item h3 {
             font-family: var(--font-family-heading); font-size: 1.8rem;
             font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);
@@ -166,17 +146,13 @@
         .service-item .fas {
             font-size: 2.5rem; margin-bottom: 1.5rem; display: inline-block;
             background: var(--primary-gradient); background-size: 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             animation: shimmerText 5s linear infinite;
         }
 
-        /* --- ✨ "Black Card" Featured Plan ✨ --- */
         .pricing-item.featured {
-            transform: scale(1.05);
-            background: var(--text-primary);
-            color: var(--background-light);
-            border: 1px solid var(--gold-dark);
+            transform: scale(1.05); background: var(--text-primary);
+            color: var(--background-light); border: 1px solid var(--gold-dark);
         }
         .pricing-item.featured h3, .pricing-item.featured .price {
             background: var(--primary-gradient); background-size: 200%;
@@ -188,32 +164,96 @@
         .pricing-features li { padding: 0.8rem 0; border-bottom: 1px solid var(--border-color); }
         .pricing-item.featured .pricing-features li { border-bottom-color: rgba(184, 134, 11, 0.4); }
 
-        /* General Styles */
         .line-cta-button { display: inline-flex; align-items: center; justify-content: center; gap: 12px; background-color: var(--line-green); color: white; padding: 18px 45px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(6, 199, 85, 0.3); border: none; }
         .line-cta-button:hover, .line-cta-button:focus { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(6, 199, 85, 0.4); background-color: #05b34d; outline: none; }
-        .cta-section { text-align: center; padding: 120px 0; }
-        .cta-section h2 { font-family: var(--font-family-heading); font-size: 3.5rem; margin-bottom: 1.5rem; font-weight: 700; }
+        .cta-section { text-align: center; padding: 100px 0; }
+        .cta-section h2 { font-family: var(--font-family-heading); font-size: 3.2rem; margin-bottom: 1.5rem; font-weight: 700; }
         footer { background: var(--text-primary); color: #999; text-align: center; padding: 4rem 0; }
         .footer-links a:hover { color: white; }
-        .back-to-top { background: var(--primary-gradient); background-size: 200%; color: var(--text-primary); box-shadow: 0 5px 20px rgba(184, 134, 11, 0.3); animation: shimmerText 5s linear infinite reverse; }
-        .back-to-top:hover { box-shadow: 0 8px 30px rgba(184, 134, 11, 0.5); }
         
-        /* Shimmer Animation */
+        .back-to-top {
+            position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px;
+            background: var(--primary-gradient); background-size: 200%; color: var(--text-primary);
+            border-radius: 50%; border: none; cursor: pointer;
+            box-shadow: 0 5px 20px rgba(184, 134, 11, 0.3);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+            animation: shimmerText 5s linear infinite reverse;
+            transition: all 0.3s ease;
+            opacity: 0; visibility: hidden; z-index: 999;
+        }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(184, 134, 11, 0.5); }
+        
         @keyframes shimmerText { to { background-position: -200% center; } }
 
-        /* Fade-in Animations (for JS hooks) */
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        .fade-in-up { opacity: 0; transform: translateY(40px); }
-        .fade-in-up.is-visible { animation: fadeInUp 0.9s ease-out both; }
-        .fade-in-left, .fade-in-right { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-        .fade-in-left { transform: translateX(-50px); }
-        .fade-in-right { transform: translateX(50px); }
-        .fade-in-left.is-visible, .fade-in-right.is-visible { opacity: 1; transform: translateX(0); }
+        /* --- 修正: アニメーションをシンプルに --- */
+        .fade-in-up, .fade-in-left, .fade-in-right {
+            opacity: 0;
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .fade-in-up { transform: translateY(30px); }
+        .fade-in-left { transform: translateX(-30px); }
+        .fade-in-right { transform: translateX(30px); }
 
-        /* Responsive */
+        .fade-in-up.is-visible, .fade-in-left.is-visible, .fade-in-right.is-visible {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+        .fade-in-up.is-visible[style*="animation-delay"] { transition-delay: 0.2s; }
+        .fade-in-up.is-visible[style*="animation-delay: 0.4s"] { transition-delay: 0.4s; }
+
+        .sp-only { display: none; }
+
+        /* --- ✨ モバイル最適化の強化 ✨ --- */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; }
-            .section-title, .cta-section h2 { font-size: 2.5rem; }
+            html { scroll-padding-top: 65px; }
+            .section { padding: 80px 0; }
+            
+            /* ヘッダー */
+            .nav-menu-container {
+                display: none;
+                position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                background-color: var(--background-light);
+                flex-direction: column; justify-content: center; align-items: center;
+                transform: translateX(100%); transition: transform 0.4s ease;
+            }
+            .nav-menu-container.active { transform: translateX(0); }
+            .nav-menu { flex-direction: column; gap: 3rem; text-align: center; }
+            .nav-menu a { font-size: 1.5rem; }
+            
+            .hamburger-menu {
+                display: block; background: none; border: none; cursor: pointer;
+                z-index: 1001; padding: 10px; position: relative; width: 45px; height: 45px;
+            }
+            .hamburger-menu span {
+                display: block; width: 25px; height: 2px;
+                background-color: var(--text-primary);
+                margin: 6px auto; transition: all 0.4s ease;
+                position: absolute; left: 10px;
+            }
+            .hamburger-menu span:nth-child(1) { top: 10px; }
+            .hamburger-menu span:nth-child(2) { top: 18px; }
+            .hamburger-menu span:nth-child(3) { top: 26px; }
+
+            .hamburger-menu.active span:nth-child(1) { top: 18px; transform: rotate(45deg); }
+            .hamburger-menu.active span:nth-child(2) { opacity: 0; }
+            .hamburger-menu.active span:nth-child(3) { top: 18px; transform: rotate(-45deg); }
+            
+            /* ヒーロー */
+            .hero { padding: 120px 0 100px; }
+            .hero h1 { font-size: 2.8rem; }
+            .hero .subtitle { font-size: 1.1rem; }
+            #particles-js { display: none; } /* モバイルではパーティクル非表示 */
+            
+            /* セクション */
+            .section-title { font-size: 2.2rem; }
+            .cta-section h2 { font-size: 2.2rem; }
+            .problem-item h3, .service-item h3, .benefit-item h3, .pricing-item h3 { font-size: 1.6rem; }
+
+            .pricing-item.featured { transform: scale(1); }
+
+            .sp-only { display: block; }
         }
     </style>
 </head>
@@ -223,6 +263,11 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">Linkup-Studio</div>
+                <button class="hamburger-menu" id="hamburger-menu" aria-label="メニューを開く" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <nav class="nav-menu-container" id="nav-menu-container">
                     <ul class="nav-menu">
                         <li><a href="#problems">お悩み</a></li>
@@ -238,7 +283,8 @@
 
     <main>
         <section class="hero">
-            <div id="particles-js" aria-hidden="true"></div> <div class="container">
+            <div id="particles-js" aria-hidden="true"></div>
+            <div class="container">
                 <h1 class="fade-in-up">LINE活用を<br>黄金の成果へ。</h1>
                 <p class="subtitle fade-in-up" style="animation-delay: 0.2s;">
                     文章作成・LP制作・システム構築まで、<br>
@@ -253,20 +299,17 @@
 
         <section class="section problems" id="problems">
             <div class="container" style="text-align: center;">
-                <h2 class="section-title"><span>そのお悩み、<br class="sp-only">最高の価値へ</span></h2>
+                <h2 class="section-title">そのお悩み、<br class="sp-only">最高の価値へ</h2>
                 <div class="card-grid">
                     <div class="problem-item fade-in-left">
-                        <div class="card-glow" aria-hidden="true"></div>
                         <h3>文章作成が苦手</h3>
                         <p>顧客の心を掴むメッセージが分からない。最高の反応率を引き出す文章を専門家が作成します。</p>
                     </div>
                     <div class="problem-item fade-in-up">
-                        <div class="card-glow" aria-hidden="true"></div>
                         <h3>時間とコストの最適化</h3>
                         <p>本業に集中したい。最小の投資で最大の効果を生む、費用対効果に優れた運用を実現します。</p>
                     </div>
                     <div class="problem-item fade-in-right">
-                        <div class="card-glow" aria-hidden="true"></div>
                         <h3>デジタル資産がない</h3>
                         <p>Webサイトがないと信頼性が。LINEと連携する洗練されたLPで、あなたの価値を最大化します。</p>
                     </div>
@@ -276,22 +319,19 @@
 
         <section class="section services" id="services">
             <div class="container" style="text-align: center;">
-                <h2 class="section-title"><span>提供するサービス</span></h2>
+                <h2 class="section-title">提供するサービス</h2>
                 <div class="card-grid">
                     <div class="service-item fade-in-left">
-                        <div class="card-glow" aria-hidden="true"></div>
                         <i class="fas fa-edit"></i>
                         <h3>文章作成サポート</h3>
                         <p>あなたのビジネスに最適な挨拶文、配信メッセージ、キャンペーン告知などをプロがスピーディーに作成します。</p>
                     </div>
                     <div class="service-item fade-in-up">
-                        <div class="card-glow" aria-hidden="true"></div>
                         <i class="fas fa-desktop"></i>
                         <h3>高機能LP制作</h3>
                         <p>LINEと連携するモダンなランディングページを制作。サービス紹介や商品販売、予約受付などをLINEに集約できます。</p>
                     </div>
                     <div class="service-item fade-in-right">
-                        <div class="card-glow" aria-hidden="true"></div>
                         <i class="fas fa-cogs"></i>
                         <h3>LINEシステム構築</h3>
                         <p>自動応答、セグメント配信、顧客管理など、ビジネスを効率化するLINEのシステム設定をトータルでサポートします。</p>
@@ -302,20 +342,17 @@
         
         <section class="section benefits" id="benefits">
             <div class="container" style="text-align: center;">
-                <h2 class="section-title"><span>導入で得られるメリット</span></h2>
+                <h2 class="section-title">導入で得られるメリット</h2>
                 <div class="card-grid">
                     <div class="benefit-item fade-in-left">
-                        <div class="card-glow" aria-hidden="true"></div>
                         <h3>リピート率向上</h3>
                         <p>顧客との継続的な接点を生み出し、再来店・再購入を促すファン化の仕組みを構築します。</p>
                     </div>
                     <div class="benefit-item fade-in-up">
-                        <div class="card-glow" aria-hidden="true"></div>
                         <h3>業務効率化</h3>
                         <p>自動化システムにより、問い合わせ対応や情報発信の手間を大幅に削減し、本業に集中できます。</p>
                     </div>
                     <div class="benefit-item fade-in-right">
-                        <div class="card-glow" aria-hidden="true"></div>
                         <h3>コスト削減</h3>
                         <p>高額な広告費や人件費をかけずに、低コストで効果的なマーケティングと顧客管理を実現します。</p>
                     </div>
@@ -325,10 +362,9 @@
 
         <section class="section pricing" id="pricing">
             <div class="container" style="text-align: center;">
-                <h2 class="section-title"><span>料金プラン</span></h2>
+                <h2 class="section-title">料金プラン</h2>
                 <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
                     <div class="pricing-item">
-                        <div class="card-glow" aria-hidden="true"></div>
                         <h3>ベーシックプラン</h3>
                         <div class="price">¥50,000</div>
                         <ul class="pricing-features">
@@ -348,7 +384,6 @@
                         </ul>
                     </div>
                     <div class="pricing-item">
-                        <div class="card-glow" aria-hidden="true"></div>
                         <h3>プレミアムプラン</h3>
                         <div class="price">¥120,000</div>
                         <ul class="pricing-features">
@@ -359,7 +394,6 @@
                         </ul>
                     </div>
                     <div class="pricing-item">
-                        <div class="card-glow" aria-hidden="true"></div>
                         <h3>LP制作プラン</h3>
                         <div class="price">¥80,000</div>
                         <ul class="pricing-features">
@@ -398,57 +432,33 @@
             <p>&copy; 2025 Linkup-studio. All Rights Reserved.</p>
         </div>
     </footer>
+    
+    <button class="back-to-top" id="backToTop" aria-label="ページトップに戻る">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // ✨ Gold Dust Animation with particles.js ✨
-            if (typeof particlesJS !== 'undefined') {
+            // --- 修正: モバイルではパーティクルを無効化 ---
+            if (typeof particlesJS !== 'undefined' && window.innerWidth > 768) {
                 particlesJS('particles-js', {
                     "particles": {
                         "number": {"value": 60, "density": {"enable": true, "value_area": 800}},
                         "color": {"value": "#B8860B"},
                         "shape": {"type": "circle"},
                         "opacity": {"value": 0.6, "random": true, "anim": {"enable": true, "speed": 1, "opacity_min": 0.1, "sync": false}},
-                        "size": {"value": 2, "random": true, "anim": {"enable": false}},
+                        "size": {"value": 2, "random": true},
                         "line_linked": {"enable": false},
-                        "move": {"enable": true, "speed": 1, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false}
+                        "move": {"enable": true, "speed": 1, "direction": "none", "random": true, "straight": false, "out_mode": "out"}
                     },
-                    "interactivity": {
-                        "detect_on": "canvas",
-                        "events": {"onhover": {"enable": false}, "onclick": {"enable": false}}
-                    },
+                    "interactivity": {"detect_on": "canvas", "events": {"onhover": {"enable": false}}},
                     "retina_detect": true
                 });
             }
 
-            // ✨ Mask Reveal Animation for Titles ✨
-            const animatedTitles = document.querySelectorAll('.section-title');
-            const titleObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        titleObserver.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.5 });
-            animatedTitles.forEach(title => {
-                // テキストをspanで囲む処理
-                title.innerHTML = `<span>${title.textContent.trim().split('').join('</span><span>')}</span>`;
-                // 各文字に遅延を設定
-                const spans = title.querySelectorAll('span');
-                spans.forEach((span, index) => {
-                    span.style.transitionDelay = `${index * 0.03}s`;
-                });
-                titleObserver.observe(title);
-            });
-
-            // --- 他のJavaScriptは変更なし ---
-            const header = document.getElementById('header');
-            if (header) {
-                window.addEventListener('scroll', () => { window.scrollY > 50 ? header.classList.add('scrolled') : header.classList.remove('scrolled'); });
-            }
+            // --- 修正: シンプルなフェードインアニメーション ---
             const animatedElements = document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -459,8 +469,46 @@
                 });
             }, { threshold: 0.1 });
             animatedElements.forEach(el => { observer.observe(el); });
+
+            // --- ✨ ハンバーガーメニューのJavaScriptを追加 ✨ ---
+            const hamburger = document.getElementById('hamburger-menu');
+            const navContainer = document.getElementById('nav-menu-container');
+            if (hamburger && navContainer) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navContainer.classList.toggle('active');
+                    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+                    hamburger.setAttribute('aria-expanded', !isExpanded);
+                });
+                // メニュー項目クリックでメニューを閉じる
+                navContainer.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navContainer.classList.remove('active');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+
+            // --- ✨ トップへ戻るボタンのJavaScriptを追加 ✨ ---
+            const backToTop = document.getElementById('backToTop');
+            if (backToTop) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 300) {
+                        backToTop.classList.add('show');
+                    } else {
+                        backToTop.classList.remove('show');
+                    }
+                });
+                backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'auto' })); // 'auto'で瞬時に移動
+            }
+
+            // --- スクロールヘッダー (変更なし) ---
+            const header = document.getElementById('header');
+            if (header) {
+                window.addEventListener('scroll', () => { window.scrollY > 50 ? header.classList.add('scrolled') : header.classList.remove('scrolled'); });
+            }
         });
     </script>
 </body>
 </html>
-
