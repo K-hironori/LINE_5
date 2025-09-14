@@ -160,7 +160,18 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             animation: shimmerText 5s linear infinite;
         }
-        .price { font-family: var(--font-family-base); font-size: 3rem; font-weight: 900; margin: 1rem 0; color: var(--text-primary); }
+        .price {
+            font-family: var(--font-family-base);
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 1rem 0;
+            color: var(--text-primary);
+            text-align: center;
+            /* Make digits align vertically across items */
+            font-variant-numeric: tabular-nums;
+            -webkit-font-feature-settings: 'tnum' 1;
+            font-feature-settings: 'tnum' 1;
+        }
         .pricing-features { list-style: none; margin: 2rem 0; text-align: left; }
         .pricing-features li { padding: 0.8rem 0; border-bottom: 1px solid var(--border-color); }
         .pricing-item.featured .pricing-features li { border-bottom-color: rgba(184, 134, 11, 0.4); }
