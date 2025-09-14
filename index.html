@@ -246,12 +246,9 @@
             /* 戻る（閉じる）ボタン */
             .nav-menu-container .menu-back { display: none; }
             .nav-menu-container.active .menu-back { display: inline-flex; }
+            .menu-back-item { width: calc(100% - 48px); margin: 8px auto 0; }
             .menu-back {
-                position: absolute;
-                bottom: calc(env(safe-area-inset-bottom) + 56px);
-                left: 50%;
-                transform: translateX(-50%);
-                width: min(600px, calc(100% - 48px));
+                width: 100%;
                 display: inline-flex;
                 justify-content: center;
                 align-items: center;
@@ -264,11 +261,10 @@
                 font-weight: 700;
                 cursor: pointer;
                 box-shadow: 0 10px 28px rgba(184, 134, 11, 0.35);
-                z-index: 2001;
                 -webkit-appearance: none;
                 -webkit-tap-highlight-color: rgba(0,0,0,0);
             }
-            .menu-back:hover { transform: translateX(-50%) translateY(-2px); box-shadow: 0 14px 36px rgba(184, 134, 11, 0.45); }
+            .menu-back:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(184, 134, 11, 0.45); }
 
             /* ヒーロー */
             .hero { padding: 120px 0 100px; }
@@ -305,8 +301,8 @@
                         <li><a href="#benefits">メリット</a></li>
                         <li><a href="#pricing">料金</a></li>
                         <li><a href="#contact">お問い合わせ</a></li>
+                        <li class="menu-back-item"><button class="menu-back" id="menu-back" aria-label="メニューを閉じる" type="button"><i class="fas fa-arrow-left" aria-hidden="true"></i><span>戻る</span></button></li>
                     </ul>
-                    <button class="menu-back" id="menu-back" aria-label="メニューを閉じる" type="button"><i class="fas fa-arrow-left" aria-hidden="true"></i><span>戻る</span></button>
                 </nav>
             </div>
         </div>
