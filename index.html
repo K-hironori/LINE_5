@@ -9,31 +9,38 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <style>
-        /* === NEW DESIGN | CONCEPT: Clean, Cool, Trustworthy === */
+        /* === NEW DESIGN V3 | CONCEPT: Vibrant Tech === */
         :root {
-            /* 爽やかで信頼感のあるブルー */
-            --primary-color: #007BFF; 
-            --primary-color-dark: #0056b3;
-            /* アクセントカラー: プライマリを補完する明るい青 */
-            --accent-color: #58a6ff; 
+            /* グラデーションの定義 */
+            --primary-gradient-start: #1DE9B6; /* Teal */
+            --primary-gradient-end: #00B0FF;   /* Sky Blue */
+            --primary-gradient: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+            
+            /* 単色としてのプライマリカラー */
+            --primary-color: #1DE9B6;
+            --primary-color-dark: #00B0FF;
+
             --line-green: #06C755;
-            /* テキストカラー: 黒より少し柔らかいダークグレー */
-            --text-primary: #212529; 
-            --text-secondary: #6c757d;
-            /* 背景色: 白と明るいグレー */
+            
+            /* テキストカラー: より引き締まった印象のダークグレー */
+            --text-primary: #121212; 
+            --text-secondary: #555;
+            
+            /* 背景色: 白と非常に明るいグレー */
             --background-light: #ffffff;
-            --background-medium: #f8f9fa;
-            /* ボーダーカラー */
-            --border-color: #dee2e6;
+            --background-medium: #fcfcfd;
+            
+            --border-color: #e9ecef;
             --font-family-base: 'Noto Sans JP', sans-serif;
-            /* 影: よりソフトで繊細に */
-            --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.06);
-            --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.1);
+            
+            /* 影: さらに繊細に */
+            --shadow-soft: 0 5px 20px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 10px 35px rgba(0, 0, 0, 0.08);
         }
 
         *, *::before, *::after {
@@ -44,7 +51,7 @@
         
         html {
             scroll-behavior: smooth;
-            scroll-padding-top: 90px; /* ヘッダーの高さ分 */
+            scroll-padding-top: 90px;
         }
 
         body {
@@ -64,19 +71,18 @@
 
         /* Header */
         header {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            transition: box-shadow 0.3s ease;
-            border-bottom: 1px solid transparent; /* 初期状態では非表示 */
+            transition: box-shadow 0.3s ease, border-bottom 0.3s ease;
+            border-bottom: 1px solid transparent;
         }
 
-        /* スクロール時にヘッダーに影とボーダーを追加 */
         header.scrolled {
             box-shadow: var(--shadow-soft);
             border-bottom: 1px solid var(--border-color);
@@ -89,10 +95,12 @@
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            color: var(--primary-color);
+            font-size: 1.6rem;
+            font-weight: 900; /* Black weight for impact */
+            letter-spacing: -0.5px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .nav-menu {
@@ -102,9 +110,9 @@
         }
 
         .nav-menu a {
-            color: var(--text-primary);
+            color: var(--text-secondary);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 700;
             transition: color 0.3s ease;
             position: relative;
             padding: 5px 0;
@@ -115,16 +123,17 @@
             position: absolute;
             width: 100%;
             transform: scaleX(0);
-            height: 2px;
-            bottom: 0;
+            height: 3px;
+            bottom: -2px;
             left: 0;
-            background-color: var(--primary-color);
+            background: var(--primary-gradient);
             transform-origin: bottom right;
-            transition: transform 0.25s ease-out;
+            transition: transform 0.3s ease-out;
+            border-radius: 2px;
         }
 
         .nav-menu a:hover, .nav-menu a:focus {
-            color: var(--primary-color);
+            color: var(--text-primary);
             outline: none;
         }
         
@@ -138,28 +147,12 @@
 
         @media (max-width: 768px) {
             .nav-menu { display: none; }
-            .hamburger-menu {
-                display: block;
-                background: none; border: none; cursor: pointer;
-                z-index: 1001; padding: 10px;
-            }
-            .hamburger-menu span {
-                display: block; width: 25px; height: 2px;
-                background-color: var(--text-primary); /* 線の色を変更 */
-                margin: 6px 0; transition: all 0.4s ease;
-            }
-            .hamburger-menu.active span { background-color: var(--text-primary); } /* Xになっても色を維持 */
-            .hamburger-menu.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger-menu { display: block; background: none; border: none; cursor: pointer; z-index: 1001; padding: 10px; }
+            .hamburger-menu span { display: block; width: 25px; height: 3px; background-color: var(--text-primary); margin: 6px 0; transition: all 0.4s ease; border-radius: 2px;}
+            .hamburger-menu.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
             .hamburger-menu.active span:nth-child(2) { opacity: 0; }
-            .hamburger-menu.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-            .nav-menu-container {
-                position: fixed; top: 0; left: 0;
-                width: 100%; height: 100vh;
-                background-color: var(--background-light); /* 背景を白に */
-                display: flex; justify-content: center; align-items: center;
-                transform: translateX(100%); transition: transform 0.4s ease;
-            }
+            .hamburger-menu.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+            .nav-menu-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--background-light); display: flex; justify-content: center; align-items: center; transform: translateX(100%); transition: transform 0.4s ease; }
             .nav-menu-container.active { transform: translateX(0); }
             .nav-menu-container .nav-menu { display: flex; flex-direction: column; gap: 3rem; text-align: center; }
             .nav-menu-container .nav-menu a { font-size: 1.5rem; }
@@ -169,83 +162,60 @@
         .hero {
             background-color: var(--background-light);
             text-align: center;
-            padding: 180px 0 140px; /* 上下の余白を調整 */
+            padding: 180px 0 160px;
             position: relative;
             overflow: hidden;
         }
 
         .hero h1 {
-            font-size: 3.2rem; /* 少し大きくしてインパクトを */
+            font-size: 3.5rem;
             margin-bottom: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
             line-height: 1.4;
-            color: var(--text-primary);
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero .subtitle {
-            font-size: 1.2rem;
-            max-width: 650px;
-            margin: 0 auto 3rem auto;
+            font-size: 1.25rem;
+            max-width: 680px;
+            margin: 0 auto 3.5rem auto;
             color: var(--text-secondary);
         }
         
         /* LINE CTA Button */
         .line-cta-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            background-color: var(--line-green);
-            color: white;
-            padding: 18px 45px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.2rem;
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+            background-color: var(--line-green); color: white;
+            padding: 18px 45px; border-radius: 50px; text-decoration: none;
+            font-weight: 700; font-size: 1.2rem;
             transition: all 0.3s ease;
             box-shadow: 0 4px 20px rgba(6, 199, 85, 0.3);
             border: none;
         }
-
-        .line-cta-button:hover, .line-cta-button:focus {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(6, 199, 85, 0.4);
-            background-color: #05b34d;
-            outline: none;
-        }
-        
-        .line-cta-button .fa-line {
-            font-size: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .line-cta-button:hover .fa-line {
-            transform: scale(1.1) rotate(-10deg);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
+        .line-cta-button:hover, .line-cta-button:focus { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(6, 199, 85, 0.4); background-color: #05b34d; outline: none; }
+        .line-cta-button .fa-line { font-size: 1.5rem; transition: transform 0.3s ease; }
+        .line-cta-button:hover .fa-line { transform: scale(1.1) rotate(-10deg); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
         /* Section Styles */
         .section {
-            padding: 100px 0;
+            padding: 120px 0;
         }
         
-        /* セクションごとに背景色を交互に設定 */
         .section:nth-of-type(even) {
             background-color: var(--background-medium);
         }
         
         .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 4rem;
-            font-weight: 700;
-            color: var(--text-primary);
+            text-align: center; font-size: 2.8rem; margin-bottom: 5rem;
+            font-weight: 900; color: var(--text-primary);
         }
 
         .section-title::after {
-            content: ''; display: block; width: 60px; height: 3px;
-            background: var(--primary-color); margin: 1rem auto 0;
+            content: ''; display: block; width: 70px; height: 4px;
+            background: var(--primary-gradient); margin: 1.2rem auto 0;
             border-radius: 2px;
         }
         
@@ -253,146 +223,81 @@
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem; /* gapを少し広げる */
+            gap: 2.5rem;
         }
         
-        .service-item, .problem-item, .benefit-item, .case-item, .pricing-item {
+        .problem-item, .service-item, .benefit-item, .pricing-item {
             background-color: var(--background-light);
             padding: 2.5rem;
-            border-radius: 12px; /* 少し大きめの角丸 */
+            border-radius: 16px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: var(--shadow-soft);
             border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
         }
         
-        .service-item:hover, .problem-item:hover, .case-item:hover, .pricing-item:hover, .benefit-item:hover {
-            transform: translateY(-8px);
+        .problem-item:hover, .service-item:hover, .benefit-item:hover, .pricing-item:hover {
+            transform: translateY(-10px);
             box-shadow: var(--shadow-medium);
         }
 
-        .problem-item {
-            border-left: 5px solid var(--primary-color); /* 赤からプライマリカラーに変更 */
-        }
-        .problem-item h3 { color: var(--text-primary); margin-bottom: 1rem; font-size: 1.3rem; }
+        .problem-item { border-left: 5px solid var(--primary-color); }
+        .problem-item h3 { color: var(--text-primary); margin-bottom: 1rem; font-size: 1.4rem; font-weight: 700; }
         
-        .service-item { border-top: 4px solid var(--primary-color); text-align: center; }
-        .service-item .fas {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            display: inline-block;
-        }
-        .service-item h3 { 
-            color: var(--text-primary); 
-            margin-bottom: 1rem; 
-            font-size: 1.4rem; 
-        }
+        .service-item { border-top: 4px solid var(--primary-color-dark); text-align: center; }
+        .service-item .fas { font-size: 2.8rem; margin-bottom: 1.5rem; display: inline-block; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .service-item h3 { color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem; font-weight: 700; }
 
-        .benefit-item {
-            text-align: center;
-        }
-        .benefit-item h3 { 
-            color: var(--primary-color); 
-            font-size: 1.4rem; 
-            margin-bottom: 1rem; 
-        }
+        .benefit-item { text-align: center; }
+        .benefit-item h3 { color: var(--text-primary); font-size: 1.5rem; margin-bottom: 1rem; font-weight: 700; }
         
         /* Pricing Section */
         .pricing-item { text-align: center; }
         .pricing-item.featured {
             transform: scale(1.05);
-            background: var(--primary-color);
+            background: var(--primary-gradient);
             color: var(--background-light);
-            border-color: var(--primary-color);
+            border: none;
         }
-        .pricing-item.featured h3, .pricing-item.featured .price { color: var(--background-light); }
-        .price { font-size: 2.8rem; font-weight: 700; margin: 1rem 0; color: var(--primary-color); }
+        .pricing-item.featured h3, .pricing-item.featured .price { color: var(--background-light); text-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .price { font-size: 3rem; font-weight: 900; margin: 1rem 0; color: var(--text-primary); }
         .pricing-features { list-style: none; margin: 2rem 0; text-align: left; }
-        .pricing-features li { padding: 0.7rem 0; border-bottom: 1px solid var(--border-color); }
-        .pricing-item.featured .pricing-features li { border-bottom-color: rgba(255,255,255,0.3); }
+        .pricing-features li { padding: 0.8rem 0; border-bottom: 1px solid var(--border-color); }
+        .pricing-item.featured .pricing-features li { border-bottom-color: rgba(255,255,255,0.4); }
 
         /* CTA Section (End of Page) */
-        .cta-section {
-            text-align: center;
-            padding: 100px 0;
-        }
-        
-        .cta-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-        }
-        
-        .cta-section p {
-            max-width: 600px;
-            margin: 0 auto 3rem auto;
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-        }
+        .cta-section { text-align: center; padding: 120px 0; }
+        .cta-section h2 { font-size: 2.8rem; margin-bottom: 1.5rem; font-weight: 900; }
+        .cta-section p { max-width: 600px; margin: 0 auto 3rem auto; font-size: 1.1rem; color: var(--text-secondary); }
         
         /* Footer */
-        footer {
-            background: var(--background-medium);
-            color: var(--text-secondary);
-            text-align: center;
-            padding: 4rem 0;
-        }
-
-        .footer-links {
-            display: flex; justify-content: center; gap: 2rem;
-            margin-bottom: 2rem; list-style: none;
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-links a:hover { color: var(--primary-color); }
-        .footer p { color: #aaa; font-size: 0.9rem; }
+        footer { background: #111; color: #999; text-align: center; padding: 4rem 0; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; list-style: none; }
+        .footer-links a { color: #999; text-decoration: none; transition: color 0.3s ease; font-weight: 500;}
+        .footer-links a:hover { color: var(--background-light); }
+        .footer p { color: #666; font-size: 0.9rem; }
         
         /* Back to Top Button */
         .back-to-top {
-            position: fixed; bottom: 20px; right: 20px;
-            background: var(--primary-color); color: white;
-            border: none; border-radius: 50%; width: 50px; height: 50px;
-            font-size: 1.2rem; cursor: pointer;
+            position: fixed; bottom: 25px; right: 25px;
+            background: var(--primary-gradient); color: white;
+            border: none; border-radius: 50%; width: 55px; height: 55px;
+            font-size: 1.4rem; cursor: pointer;
             box-shadow: var(--shadow-medium);
-            transition: all 0.3s; opacity: 0; visibility: hidden;
-            z-index: 999;
-            display: flex; /* アイコン中央揃え */
-            justify-content: center;
-            align-items: center;
+            transition: all 0.3s ease; opacity: 0; visibility: hidden;
+            z-index: 999; display: flex; justify-content: center; align-items: center;
         }
         .back-to-top.show { opacity: 1; visibility: visible; }
-        .back-to-top:hover { background-color: var(--primary-color-dark); transform: translateY(-5px); }
-
-        /* Other utility styles */
-        .case-item h3 { color: var(--primary-color); margin-bottom: 1rem; }
+        .back-to-top:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 12px 40px rgba(29, 233, 182, 0.4); }
 
         /* Animations */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-in-up {
-            animation: fadeInUp 0.8s ease-out both;
-        }
-        
-        .fade-in-left, .fade-in-right {
-            opacity: 0;
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in-up { animation: fadeInUp 0.8s ease-out both; }
+        .fade-in-left, .fade-in-right { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .fade-in-left { transform: translateX(-50px); }
         .fade-in-right { transform: translateX(50px); }
-        
-        .fade-in-left.is-visible, .fade-in-right.is-visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* Loading animation removed */
+        .fade-in-left.is-visible, .fade-in-right.is-visible { opacity: 1; transform: translateX(0); }
 
         /* Responsive adjustments */
         @media (max-width: 992px) {
@@ -401,22 +306,22 @@
         
         @media (max-width: 768px) {
             html { scroll-padding-top: 70px; }
+            .section { padding: 80px 0; }
             .hero { padding: 140px 0 100px; }
-            .hero h1 { font-size: 2.2rem; line-height: 1.3; }
-            .section-title, .cta-section h2 { font-size: 1.8rem; }
+            .hero h1 { font-size: 2.5rem; line-height: 1.3; }
+            .section-title, .cta-section h2 { font-size: 2rem; margin-bottom: 3rem; }
             .card-grid { grid-template-columns: 1fr; }
-            .pricing-item.featured { transform: scale(1); } /* スマホでは拡大しない */
+            .pricing-item.featured { transform: scale(1); }
         }
         
         @media (max-width: 480px) {
-            .hero h1 { font-size: 1.8rem !important; }
-            .section-title { font-size: 1.6rem !important; }
+            .hero h1 { font-size: 2rem !important; }
+            .section-title { font-size: 1.8rem !important; }
         }
     </style>
 </head>
 <body>
     
-
     <header id="header">
         <div class="container">
             <div class="header-content">
@@ -599,7 +504,6 @@ class="line-cta-button">
     </button>
 
     <script>
-        // JavaScriptはほぼ変更ありませんが、ヘッダーのスクロール効果を追加します。
         document.addEventListener('DOMContentLoaded', function () {
             // Header Scroll Effect
             const header = document.getElementById('header');
@@ -612,8 +516,6 @@ class="line-cta-button">
                     }
                 });
             }
-
-            // Loading animation removed
 
             // Hamburger Menu
             const hamburger = document.getElementById('hamburger-menu');
@@ -648,8 +550,7 @@ class="line-cta-button">
             }
 
             // Intersection Observer for Animations
-            const animatedElements =
-document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right');
+            const animatedElements = document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -669,17 +570,8 @@ document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right');
                 }
                 observer.observe(el);
             });
-            
-            // Particles.jsは今回のクリーンなデザインでは不要と判断し、無効化しました。
-            // もし使用したい場合は、以下のコメントアウトを解除してください。
-            /*
-            if (typeof particlesJS !== 'undefined') {
-                particlesJS('particles-js', {
-                    // 設定...
-                });
-            }
-            */
         });
     </script>
 </body>
 </html>
+
